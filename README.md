@@ -17,27 +17,6 @@
 
 ---
 
-<div align="center">
-
-## About Developer | عن المطور 👨‍💻
-
-### (Eng. Sadiq AL-Mubdi) م. صادق الموبدي
-
-**Cybersecurity Engineer & Systems Architect**
-
-متخصص في بناء الأنظمة الأمنية الدفاعية وتطوير أدوات التحقيق الرقمي.
-
-[![GitHub](https://img.shields.io/badge/GitHub-Eng--Sadiq--CYS--SU-181717?style=for-the-badge&logo=github)](https://github.com/Eng-sadiq-CYS-su)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sadiq%20AL--Mubdi-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sadiq-al-mubdi-3b8389387/)
-
-<br>
-
-<p>Made with Eng Sadiq ❤️🧠 for a Safer Digital World.</p>
-
-</div>
-
----
-
 ## 1. الملخص (Abstract)
 يهدف هذا المشروع إلى تطوير نظام برمجي متقدم (DupGuard) لمعالجة مشكلة تراكم الملفات المكررة التي تستهلك مساحة التخزين وتؤثر على أداء أنظمة التشغيل. يعتمد النظام على خوارزميات مطابقة متعددة المراحل (Multi-Stage Matching Algorithms) وتقنيات المعالجة المتوازية (Parallel Processing) لضمان الدقة العالية والأداء الفائق. تم بناء النظام باستخدام إطار العمل .NET 6 ونمط التصميم MVVM، مما يوفر واجهة مستخدم تفاعلية وفصلًا واضحًا بين المنطق والواجهة.
 
@@ -200,5 +179,24 @@ dotnet publish -c Release -r win-x64 --self-contained true -o ./dist
 
 ---
 
-**حقوق النشر © 2026 - المهندس صادق المبدي**  
-*جميع الحقوق محفوظة.*
+
+---
+
+<div align="center">
+
+## About Developer | عن المطور 👨‍💻
+
+### (Eng. Sadiq AL-Mubdi) م. صادق الموبدي
+
+**Cybersecurity Engineer & Systems Architect**
+
+متخصص في بناء الأنظمة الأمنية الدفاعية وتطوير أدوات التحقيق الرقمي.
+
+[![GitHub](https://img.shields.io/badge/GitHub-Eng--Sadiq--CYS--SU-181717?style=for-the-badge&logo=github)](https://github.com/Eng-sadiq-CYS-su)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sadiq%20AL--Mubdi-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sadiq-al-mubdi-3b8389387/)
+
+<br>
+
+<p>Made with Eng Sadiq ❤️🧠 for a Safer Digital World.</p>
+
+</div>
