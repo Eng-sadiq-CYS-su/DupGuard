@@ -31,10 +31,10 @@
 
 ```mermaid
 graph TD
-    User[المستخدم] --> View[View (UI Layer)]
-    View -->|Commands/Binding| ViewModel[ViewModel Layer]
+    User["المستخدم"] --> View["View (UI Layer)"]
+    View -->|Commands/Binding| ViewModel["ViewModel Layer"]
     ViewModel -->|Events/Notifications| View
-    ViewModel -->|Calls| Model[Model/Service Layer]
+    ViewModel -->|Calls| Model["Model/Service Layer"]
     Model -->|Data| ViewModel
     
     subgraph "DupGuard Architecture"
@@ -84,15 +84,15 @@ graph TD
 
 ```mermaid
 flowchart TD
-    A[Start Scan] --> B[Enumerate Files]
-    B --> C{Group by Size}
-    C -->|Single File?| D[Ignore]
-    C -->|Multiple Files?| E[Compute Partial Hash]
-    E --> F{Group by Partial Hash}
-    F -->|Unique?| D
-    F -->|Match?| G[Compute Full Hash]
-    G --> H{Final Grouping}
-    H --> I[Identified Duplicates]
+    A["بدء الفحص"] --> B["حصر الملفات"]
+    B --> C{"التجميع حسب الحجم"}
+    C -->| "ملف وحيد؟" | D["تجاهل"]
+    C -->| "ملفات متعددة؟" | E["حساب الهاش الجزئي"]
+    E --> F{"التجميع حسب الهاش الجزئي"}
+    F -->| "فريد؟" | D
+    F -->| "تطابق؟" | G["حساب الهاش الكامل"]
+    G --> H{"التجميع النهائي"}
+    H --> I["المكررات المكتشفة"]
 ```
 
 ### 4.2 المعالجة المتوازية (Parallel Processing)
