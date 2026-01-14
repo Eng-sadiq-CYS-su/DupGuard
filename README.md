@@ -3,8 +3,17 @@
 # DupGuard: نظام متقدم وعالي الأداء لكشف التكرار في الملفات
 ## Advanced High-Performance Duplicate File Detection System
 
-**إعداد وتطوير: المهندس صادق المبدي**  
+**إعداد وتطوير: المهندس صادق الموبدي**  
 **التاريخ: يناير 2026**
+
+<div align="center">
+
+![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11-0078D6?style=for-the-badge&logo=windows)
+![Language](https://img.shields.io/badge/Language-C%23%2010-239120?style=for-the-badge&logo=c-sharp)
+![Framework](https://img.shields.io/badge/Framework-.NET%206.0-512BD4?style=for-the-badge&logo=dotnet)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+
+</div>
 
 ---
 
@@ -165,5 +174,24 @@ dotnet publish -c Release -r win-x64 --self-contained true -o ./dist
 
 ---
 
-**حقوق النشر © 2026 - المهندس صادق المبدي**  
-*جميع الحقوق محفوظة.*
+
+---
+
+<div align="center">
+
+## About Developer | عن المطور 👨‍💻
+
+### (Eng. Sadiq AL-Mubdi) م. صادق الموبدي
+
+**Cybersecurity Engineer & Systems Architect**
+
+متخصص في بناء الأنظمة الأمنية الدفاعية وتطوير أدوات التحقيق الرقمي.
+
+[![GitHub](https://img.shields.io/badge/GitHub-Eng--Sadiq--CYS--SU-181717?style=for-the-badge&logo=github)](https://github.com/Eng-sadiq-CYS-su)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sadiq%20AL--Mubdi-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sadiq-al-mubdi-3b8389387/)
+
+<br>
+
+<p>Made with Eng Sadiq ❤️🧠 for a Safer Digital World.</p>
+
+</div>
