@@ -1,0 +1,1 @@
+// ServiceLocator is not needed since we're using DI directly in Program.cs

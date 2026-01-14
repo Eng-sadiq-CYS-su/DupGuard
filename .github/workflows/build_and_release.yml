@@ -1,0 +1,38 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore DupGuard.sln
+
+    - name: Build
+      run: dotnet build DupGuard.sln --no-restore --configuration Release
+
+    - name: Test
+      run: dotnet test DupGuard.sln --no-build --configuration Release --verbosity normal
+
+    - name: Publish WPF App
+      run: dotnet publish DupGuardWPF.csproj --configuration Release --runtime win-x64 --self-contained false --output ./publish
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: DupGuard-Build
+        path: ./publish

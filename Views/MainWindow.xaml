@@ -1,0 +1,412 @@
+<Window x:Class="DupGuard.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DupGuard.Views"
+        xmlns:utils="clr-namespace:DupGuard.Utilities"
+        mc:Ignorable="d"
+        Title="DupGuard - كاشف الملفات المتكررة المتقدم"
+        Height="700" Width="1000"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource BackgroundBrush}">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="{DynamicResource PrimaryBrush}" Padding="20,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="🎯" FontSize="24" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel>
+                    <TextBlock Text="DupGuard" FontSize="24" FontWeight="Bold"
+                             Foreground="White" VerticalAlignment="Center"/>
+                    <TextBlock Text="كاشف الملفات المتكررة المتقدم لأنظمة ويندوز"
+                             FontSize="12" Foreground="#E0E0E0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <TabControl Grid.Row="1" Margin="10" Background="White" BorderBrush="{DynamicResource SurfaceBrush}">
+
+            <!-- Scan Tab -->
+            <TabItem Header="🔍 الفحص" IsSelected="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Scan Options -->
+                    <GroupBox Grid.Row="0" Header="إعدادات الفحص" Margin="5" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="5">
+                                <CheckBox Content="تضمين المجلدات الفرعية"
+                                         IsChecked="{Binding IncludeSubdirectories}" Margin="0,5"/>
+                                <CheckBox Content="استثناء ملفات النظام"
+                                         ToolTip="تجاهل ملفات ويندوز الحساسة لمنع تلف النظام"
+                                         IsChecked="{Binding ExcludeSystemFiles}" Margin="0,5"/>
+                                <CheckBox Content="استثناء الملفات المخفية"
+                                         ToolTip="تجاهل الملفات والمجلدات المخفية"
+                                         IsChecked="{Binding ExcludeHiddenFiles}" Margin="0,5"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="5">
+                                <TextBlock Text="الحجم الأدنى للملف:" Margin="0,0,0,5"/>
+                                <DockPanel Margin="0,0,0,10">
+                                    <ComboBox ItemsSource="{Binding FileSizeUnits}"
+                                              SelectedItem="{Binding SelectedFileSizeUnit}"
+                                              Width="60" DockPanel.Dock="Right" Margin="5,0,0,0"/>
+                                    <TextBox Text="{Binding MinFileSizeInput}"/>
+                                </DockPanel>
+
+                                <CheckBox Content="استخدام الهاش الجزئي"
+                                         ToolTip="يسرّع عملية الفحص عبر مقارنة جزء صغير من الملفات الكبيرة أولاً. مفيد للملفات التي يزيد حجمها عن 1 جيجابايت."
+                                         IsChecked="{Binding UsePartialHash}" Margin="0,5"/>
+                                <TextBlock Text="حجم الهاش الجزئي (كيلوبايت):" Margin="0,10,0,5"/>
+                                <TextBox Text="{Binding PartialHashSizeKB}" Margin="0,0,0,10"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="5">
+                                <CheckBox Content="وضع الموارد المنخفضة"
+                                         ToolTip="يقلل استهلاك المعالج والذاكرة، ولكنه قد يجعل الفحص أبطأ. مفيد إذا كنت تعمل على برامج أخرى أثناء الفحص."
+                                         IsChecked="{Binding LowResourceMode}" Margin="0,5"/>
+
+                                <TextBlock Text="المسار المختار:" FontWeight="Bold" Margin="0,20,0,5"/>
+                                <ListBox ItemsSource="{Binding SelectedDirectories}"
+                                        Height="80" Margin="0,0,0,10"/>
+                                <Button Content="اختيار المجلدات..."
+                                       Command="{Binding SelectDirectoriesCommand}"
+                                       HorizontalAlignment="Left"/>
+
+                                <TextBlock Text="اختيار قرص كامل:" FontWeight="Bold" Margin="0,12,0,5"/>
+                                <DockPanel LastChildFill="True">
+                                    <ComboBox ItemsSource="{Binding AvailableDrives}"
+                                              SelectedItem="{Binding SelectedDrive}"
+                                              MinWidth="140"/>
+                                    <Button Content="اختيار القرص" Margin="8,0,0,0" Padding="10,2"
+                                            Command="{Binding SelectDriveCommand}"/>
+                                </DockPanel>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Progress Section -->
+                    <GroupBox Grid.Row="1" Header="حالة الفحص" Margin="5" Padding="10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Progress Bar -->
+                            <ProgressBar Grid.Row="0" Value="{Binding ProgressPercentage}"
+                                       Height="20" Margin="0,0,0,10" Background="#E0E0E0">
+                                <ProgressBar.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource PrimaryBrush.Color}"/>
+                                </ProgressBar.Foreground>
+                            </ProgressBar>
+
+                            <!-- Status Info -->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="5">
+                                    <TextBlock Text="الملفات المفحوصة:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding FilesProcessed, StringFormat={}{0:N0} / {Binding TotalFiles, StringFormat={}{0:N0}}}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Margin="5">
+                                    <TextBlock Text="المكررات المكتشفة:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding DuplicatesFound, StringFormat={}{0:N0}}"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Margin="5">
+                                    <TextBlock Text="الوقت المنقضي:" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding ElapsedTimeDisplay}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Current File and Status -->
+                            <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                                <TextBlock Text="الملف الحالي:" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding CurrentFile}" TextWrapping="Wrap"
+                                         FontFamily="Consolas" FontSize="11" Foreground="#666"/>
+                                <TextBlock Text="{Binding StatusMessage}" Margin="0,5,0,0"
+                                         FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <!-- Control Buttons -->
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="20">
+                        <Button Content="🔍 بدء الفحص"
+                               Command="{Binding ScanCommand}"
+                               Width="120" Height="40" Margin="10"
+                               Background="{DynamicResource PrimaryBrush}"
+                               Foreground="White" FontWeight="Bold"
+                               IsEnabled="{Binding IsScanning, Converter={StaticResource BooleanInverter}}"/>
+
+                        <Button Content="⏹️ إلغاء"
+                               Command="{Binding CancelCommand}"
+                               Width="120" Height="40" Margin="10"
+                               Background="{DynamicResource ErrorBrush}"
+                               Foreground="White" FontWeight="Bold"
+                               IsEnabled="{Binding IsScanning}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- Results Tab -->
+            <TabItem Header="📋 النتائج">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Background="#FFFFFF" Padding="10" Margin="5" CornerRadius="5" BorderBrush="#DDD" BorderThickness="1">
+                        <WrapPanel VerticalAlignment="Center">
+                            <TextBlock Text="بحث:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBox Width="220" Margin="0,0,10,0" Text="{Binding ResultsSearchText, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="امتداد:" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBox Width="90" Margin="0,0,10,0" Text="{Binding ResultsExtensionFilter, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Text="أقل حجم (KB):" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBox Width="90" Margin="0,0,10,0" Text="{Binding ResultsMinSizeKb, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Button Content="مسح" Margin="0,0,10,0" Padding="10,2"
+                                    Command="{Binding ClearResultsFiltersCommand}"/>
+
+                            <Button Content="تحديد تلقائي (إبقاء الأحدث)" Margin="0,0,10,0" Padding="10,2"
+                                    ToolTip="تحديد كل النسخ المكررة مع الاحتفاظ بأحدث نسخة فقط من كل مجموعة"
+                                    Command="{Binding SelectSmartCommand}"/>
+
+                            <Button Content="حذف المحدد" Margin="0,0,10,0" Padding="10,2"
+                                    Background="{DynamicResource ErrorBrush}" Foreground="White"
+                                    Command="{Binding DeleteSelectedFilesCommand}"/>
+
+                            <Button Content="تصدير" Margin="0,0,10,0" Padding="10,2"
+                                    Background="{DynamicResource PrimaryBrush}" Foreground="White"
+                                    Command="{Binding ExportReportCommand}"/>
+                        </WrapPanel>
+                    </Border>
+
+                    <!-- Summary -->
+                    <Border Grid.Row="1" Background="#F0F8FF" Padding="15" Margin="5" CornerRadius="5">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="📊 ملخص النتائج:" FontSize="16" FontWeight="Bold" Margin="0,0,20,0"/>
+                            <TextBlock Text="{Binding DuplicateGroups.Count, StringFormat=تم العثور على {0} مجموعة مكررة}"
+                                     FontSize="14" VerticalAlignment="Center"/>
+                            <TextBlock Text=" | " VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding DuplicateGroups, Converter={StaticResource TotalSizeConverter}}"
+                                     FontSize="14" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Results List -->
+                    <ListBox Grid.Row="2" ItemsSource="{Binding DuplicateGroupsView}" Margin="5"
+                            Background="White" BorderBrush="#DDD">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#E0E0E0" BorderThickness="1" Margin="2" Padding="10"
+                                       Background="#FAFAFA" CornerRadius="3">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                            <TextBlock Text="📁" FontSize="16" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding FileCount, StringFormat={}{0} ملفات}"
+                                                     FontWeight="Bold" Margin="5,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="|" VerticalAlignment="Center" Margin="10,0"/>
+                                            <TextBlock Text="{Binding TotalSize, Converter={StaticResource FileSizeConverter}}"
+                                                     FontWeight="Bold" VerticalAlignment="Center"/>
+                                            <TextBlock Text=" | " VerticalAlignment="Center" Margin="10,0"/>
+                                            <TextBlock Text="توفير محتمل (احتفظ بالأحدث):" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding PotentialSavingsIfKeepNewest, Converter={StaticResource FileSizeConverter}}"
+                                                     FontWeight="Bold" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                                        </StackPanel>
+
+                                        <ListBox Grid.Row="1" ItemsSource="{Binding Files}"
+                                                BorderThickness="0" Background="Transparent">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Margin="5">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <CheckBox IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                            <TextBlock Text="📄" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding FileName}" Margin="5,0"
+                                                                     FontFamily="Consolas" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="(" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding Size, Converter={StaticResource FileSizeConverter}}"
+                                                                     VerticalAlignment="Center"/>
+                                                            <TextBlock Text=")" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=" - " VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding Directory}" VerticalAlignment="Center"
+                                                                     Foreground="#666" FontSize="11"/>
+                                                        </StackPanel>
+
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                            <Button Content="فتح" Margin="10,0,0,0" Padding="10,2"
+                                                                    Command="{Binding DataContext.OpenFileCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"/>
+                                                            <Button Content="مجلد" Margin="6,0,0,0" Padding="10,2"
+                                                                    Command="{Binding DataContext.OpenContainingFolderCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"/>
+                                                            <Button Content="نسخ" Margin="6,0,0,0" Padding="10,2"
+                                                                    Command="{Binding DataContext.CopyPathCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"/>
+                                                            <Button Content="خصائص" Margin="6,0,0,0" Padding="10,2"
+                                                                    Command="{Binding DataContext.ShowFilePropertiesCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"/>
+                                                            <Button Content="حذف" Margin="6,0,0,0" Padding="10,2"
+                                                                    Background="{DynamicResource ErrorBrush}" Foreground="White"
+                                                                    Command="{Binding DataContext.DeleteFileCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                                    CommandParameter="{Binding}"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
+            <!-- Settings Tab -->
+            <TabItem Header="⚙️ الإعدادات">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <GroupBox Header="إعدادات الأداء" Padding="10" Margin="0,0,0,15">
+                            <StackPanel>
+                                <TextBlock Text="عدد الخيوط المتوازية:" Margin="0,0,0,5"/>
+                                <ComboBox SelectedIndex="0" Margin="0,0,0,10">
+                                    <ComboBoxItem Content="تلقائي (بناءً على عدد الأنوية)"/>
+                                    <ComboBoxItem Content="1 (وضع الموارد المنخفضة)"/>
+                                    <ComboBoxItem Content="2"/>
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="8"/>
+                                </ComboBox>
+
+                                <CheckBox Content="إيقاف الفحص عند ارتفاع استهلاك المعالج"
+                                         IsChecked="True" Margin="0,10,0,5"/>
+                                <CheckBox Content="إظهار التقدم التفصيلي"
+                                         IsChecked="True" Margin="0,5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="إعدادات الأمان" Padding="10" Margin="0,0,0,15">
+                            <StackPanel>
+                                <CheckBox Content="عدم الحذف التلقائي للملفات"
+                                         IsChecked="True" Margin="0,5"/>
+                                <CheckBox Content="إنشاء نسخة احتياطية قبل الحذف"
+                                         IsChecked="True" Margin="0,5"/>
+                                <CheckBox Content="تأكيد قبل حذف كل ملف"
+                                         IsChecked="True" Margin="0,5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="إعدادات التقارير" Padding="10">
+                            <StackPanel>
+                                <CheckBox Content="حفظ تقرير الفحص تلقائياً"
+                                         IsChecked="True" Margin="0,5"/>
+                                <TextBlock Text="مسار حفظ التقارير:" Margin="0,10,0,5"/>
+                                <TextBox Text="%AppData%\DupGuard\Reports\" Margin="0,0,0,10"/>
+                                <CheckBox Content="تصدير التقرير بصيغة JSON"
+                                         IsChecked="True" Margin="0,5"/>
+                                <CheckBox Content="تصدير التقرير بصيغة CSV"
+                                         IsChecked="True" Margin="0,5"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- About Tab -->
+            <TabItem Header="ℹ️ حول البرنامج">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="DupGuard v1.0" FontSize="24" FontWeight="Bold"
+                                 HorizontalAlignment="Center" Margin="0,0,0,20"/>
+                        <TextBlock TextWrapping="Wrap" FontSize="14" LineHeight="25">
+                            برنامج DupGuard هو كاشف متقدم للملفات المتكررة مصمم خصيصاً لأنظمة ويندوز.
+                            يستخدم خوارزميات متطورة لتحقيق أعلى مستويات الأداء والدقة في كشف الملفات المتكررة.
+
+                            الميزات الرئيسية:
+                            • فحص متعدد المراحل لتحسين الأداء
+                            • دعم خوارزميات الهاش المتقدمة (BLAKE3/SHA-256)
+                            • معالجة متوازية للاستفادة من جميع أنوية المعالج
+                            • استثناء تلقائي لملفات النظام المهمة
+                            • دعم المسارات الطويلة وأذونات ويندوز
+                            • واجهة مستخدم سهلة وبديهية
+                        </TextBlock>
+
+                        <Border Background="#F0F8FF" Padding="15" Margin="0,20,0,0" CornerRadius="5">
+                            <StackPanel>
+                                <TextBlock Text="🔒 الأمان والموثوقية" FontWeight="Bold" Margin="0,0,0,10"/>
+                                <TextBlock TextWrapping="Wrap" FontSize="12" LineHeight="20">
+                                    • لا يحذف البرنامج أي ملفات تلقائياً دون موافقة المستخدم
+                                    • يستثني جميع ملفات النظام المهمة لتجنب إتلاف النظام
+                                    • يدعم إنشاء نسخ احتياطية قبل أي عملية حذف
+                                    • يتحقق من الأذونات بعناية قبل الوصول للملفات
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="#F5F5F5" Padding="10" BorderBrush="#DDD" BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="© 2024 Eng. Sadiq AL-Mubdi - جميع الحقوق محفوظة"
+                         VerticalAlignment="Center" FontSize="11" Foreground="#666"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Text="🚀 BLAKE3" VerticalAlignment="Center" FontSize="11"
+                             Foreground="#666" Margin="0,0,10,0"/>
+                    <TextBlock Text="🖥️ .NET 6" VerticalAlignment="Center" FontSize="11"
+                             Foreground="#666"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

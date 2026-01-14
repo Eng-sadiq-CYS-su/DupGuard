@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <MSBuildProjectExtensionsPath>obj\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+    <BaseOutputPath>bin\$(MSBuildProjectName)\</BaseOutputPath>
+    <RestoreConfigFile>$(MSBuildThisFileDirectory)NuGet.Config</RestoreConfigFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([System.String]::Copy('$(MSBuildProjectName)').Contains('_wpftmp'))">
+    <MSBuildProjectExtensionsPath>obj\$([System.String]::Copy('$(MSBuildProjectName)').Split('_')[0])\</MSBuildProjectExtensionsPath>
+  </PropertyGroup>
+</Project>

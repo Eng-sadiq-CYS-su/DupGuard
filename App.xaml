@@ -1,0 +1,32 @@
+<Application x:Class="DupGuard.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DupGuard"
+             xmlns:utils="clr-namespace:DupGuard.Utilities"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <!-- Primary Colors -->
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#2196F3"/>
+        <SolidColorBrush x:Key="PrimaryDarkBrush" Color="#1976D2"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#FF9800"/>
+        <SolidColorBrush x:Key="ErrorBrush" Color="#F44336"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="#4CAF50"/>
+        <SolidColorBrush x:Key="WarningBrush" Color="#FF9800"/>
+
+        <!-- Surface Colors -->
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#F5F5F5"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#FFFFFF"/>
+
+        <!-- Text Colors -->
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#212121"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#757575"/>
+        <SolidColorBrush x:Key="TextHintBrush" Color="#BDBDBD"/>
+
+        <!-- Value Converters -->
+        <utils:FileSizeConverter x:Key="FileSizeConverter"/>
+        <utils:BooleanInverter x:Key="BooleanInverter"/>
+        <utils:TotalSizeConverter x:Key="TotalSizeConverter"/>
+        <utils:ProgressWidthConverter x:Key="ProgressWidthConverter"/>
+    </Application.Resources>
+</Application>

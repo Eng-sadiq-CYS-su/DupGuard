@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>10.0</LangVersion>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <AssemblyTitle>DupGuard</AssemblyTitle>
+    <AssemblyDescription>Advanced Duplicate File Detector for Windows</AssemblyDescription>
+    <AssemblyCompany>DupGuard Team</AssemblyCompany>
+    <AssemblyProduct>DupGuard</AssemblyProduct>
+    <AssemblyCopyright>Copyright 2024 DupGuard Team</AssemblyCopyright>
+    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blake3" Version="0.5.1" />
+    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="DupGuard.Tests\**\*.cs" />
+    <Compile Remove="Models\**\*.cs" />
+    <Compile Remove="ConsoleApp\**\*.cs" />
+    <Compile Remove="FileSystemService.cs" />
+    <Compile Remove="IFileSystemService.cs" />
+    <Compile Remove="HashService.cs" />
+    <Compile Remove="IHashService.cs" />
+    <Compile Remove="ILogger.cs" />
+    <Compile Remove="IScanningService.cs" />
+    <Compile Remove="Logger.cs" />
+    <Compile Remove="ScanningService.cs" />
+    <Compile Remove="ServiceLocator.cs" />
+    <Compile Remove="Services\ServiceLocator.cs" />
+  </ItemGroup>
+
+</Project>
