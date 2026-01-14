@@ -1,4 +1,4 @@
-![DupGuard Hero Banner](file:///C:/Users/Elite/.gemini/antigravity/brain/0eb57c8a-f277-4509-b8cf-c967fb598758/dupguard_hero_banner_1768361753566.png)
+*   <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/7005e9fd-685d-4b57-a27d-79be19589dd9" />
 
 # DupGuard: نظام متقدم وعالي الأداء لكشف التكرار في الملفات
 ## Advanced High-Performance Duplicate File Detection System
@@ -12,6 +12,27 @@
 ![Language](https://img.shields.io/badge/Language-C%23%2010-239120?style=for-the-badge&logo=c-sharp)
 ![Framework](https://img.shields.io/badge/Framework-.NET%206.0-512BD4?style=for-the-badge&logo=dotnet)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+
+</div>
+
+---
+
+<div align="center">
+
+## About Developer | عن المطور 👨‍💻
+
+### (Eng. Sadiq AL-Mubdi) م. صادق الموبدي
+
+**Cybersecurity Engineer & Systems Architect**
+
+متخصص في بناء الأنظمة الأمنية الدفاعية وتطوير أدوات التحقيق الرقمي.
+
+[![GitHub](https://img.shields.io/badge/GitHub-Eng--Sadiq--CYS--SU-181717?style=for-the-badge&logo=github)](https://github.com/Eng-sadiq-CYS-su)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sadiq%20AL--Mubdi-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sadiq-al-mubdi-3b8389387/)
+
+<br>
+
+<p>Made with Eng Sadiq ❤️🧠 for a Safer Digital World.</p>
 
 </div>
 
@@ -31,7 +52,7 @@
 
 ### 2.2 الأهداف (Objectives)
 - **الأداء:** تحقيق سرعة فحص عالية باستخدام الخيوط المتعددة (Multi-threading).
-- **الدقة:** ضمان عدم وجود إيجابيات كاذبة (False Positives) باستخدام التجزئة क्रिप्टوجرافية (Cryptographic Hashing).
+- **الدقة:** ضمان عدم وجود إيجابيات كاذبة (False Positives) باستخدام التجزئة  (Cryptographic Hashing).
 - **سهولة الاستخدام:** توفير واجهة رسومية تدعم اللغة العربية وأدوات اتخاذ القرار الذكية.
 - **الأمان:** حماية ملفات النظام الحساسة من الحذف العرضي.
 
@@ -132,10 +153,15 @@ flowchart TD
 ## 6. واجهة المستخدم (User Interface)
 تم تصميم واجهة المستخدم لتكون بديهية وداعمة للغة العربية بالكامل، مع التركيز على سهولة القراءة وسرعة الوصول للوظائف الأساسية.
 
-![DupGuard User Interface](file:///C:/Users/Elite/.gemini/antigravity/brain/0eb57c8a-f277-4509-b8cf-c967fb598758/dupguard_ui_mockup_1768361772199.png)
+*   <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/9e012df8-9d7f-408c-9656-d56e605b387d" />
 
-*   **لوحة القيادة:** تعرض ملخصاً بيانياً للمساحة المستهلكة والملفات المكررة.
-*   **قائمة النتائج:** تجميع ذكي للملفات المتطابقة مع أدوات للفرز والفلترة.
+
+*   **لوحة القيادة:** تعرض ملخصاً بيانياً للمساحة المستهلكة والملفات المكررة:
+*   <img width="1920" height="1036" alt="image" src="https://github.com/user-attachments/assets/7ccce947-fa3a-4695-b951-597e55812693" />
+
+*   **قائمة النتائج:** تجميع ذكي للملفات المتطابقة مع أدوات للفرز والفلترة:
+*   .<img width="1920" height="821" alt="image" src="https://github.com/user-attachments/assets/bf277bea-93a1-474c-b484-f39beef1c4a7" />
+
 *   **شريط التقدم:** مؤشرات مرئية دقيقة لحالة الفحص الجاري.
 
 ---
@@ -161,7 +187,7 @@ flowchart TD
 
 ### 7.2 بناء المشروع من المصدر
 ```bash
-git clone https://github.com/YourUsername/DupGuard.git
+git clone https://github.com/Eng-sadiq-CYS-su/DupGuard
 cd DupGuard
 dotnet build -c Release
 ```
@@ -174,24 +200,5 @@ dotnet publish -c Release -r win-x64 --self-contained true -o ./dist
 
 ---
 
-
----
-
-<div align="center">
-
-## About Developer | عن المطور 👨‍💻
-
-### (Eng. Sadiq AL-Mubdi) م. صادق الموبدي
-
-**Cybersecurity Engineer & Systems Architect**
-
-متخصص في بناء الأنظمة الأمنية الدفاعية وتطوير أدوات التحقيق الرقمي.
-
-[![GitHub](https://img.shields.io/badge/GitHub-Eng--Sadiq--CYS--SU-181717?style=for-the-badge&logo=github)](https://github.com/Eng-sadiq-CYS-su)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Sadiq%20AL--Mubdi-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/sadiq-al-mubdi-3b8389387/)
-
-<br>
-
-<p>Made with Eng Sadiq ❤️🧠 for a Safer Digital World.</p>
-
-</div>
+**حقوق النشر © 2026 - المهندس صادق المبدي**  
+*جميع الحقوق محفوظة.*
